@@ -33,4 +33,3 @@ tasks:
       - task: clean
       - task: notion:sync
       - task: hugo:build
-      - task: deploy:cf-pages
