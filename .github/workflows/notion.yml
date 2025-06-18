@@ -1,5 +1,19 @@
+name: Build blog pages
+
 on:
   workflow_dispatch:
+
+env:
+  CLOUDFLARE_PAGES_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }}
+  NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+  NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+  GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
+  GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+  GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
+  GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  CLOUDFLARE_PAGES_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }}
 
 jobs:
   build:
@@ -30,6 +44,13 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Install notion-site
+        run: |-
+            cd /tmp
+            curl -Lo  notion-site.tar.gz https://github.com/nonacosa/notion-site/releases/download/v2.0.2/notion-site-linux-amd64.tar.gz
+            tar xvf notion-site.tar.gz
+            sudo mv notion-site /usr/bin
+            sudo chmod +x /usr/bin/notion-site
       - name: Cache Restore
         id: cache-restore
         uses: actions/cache/restore@v4
