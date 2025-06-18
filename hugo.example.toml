@@ -1,6 +1,6 @@
 baseURL = 'https://honkai.dev'
 languageCode = 'en-us'
-title = '往世乐土'
+title = "往世乐土 - libsilverwolf\\'s blog"
 
 [frontmatter]
 cover = ["image"]
@@ -80,7 +80,7 @@ cover = ["image"]
 [languages]
   [languages.en.params]
     languageName = "English"
-    title = "往世乐土"
+    title = "往世乐土 - libsilverwolf\\'s blog"
     subtitle = ""
     owner = ""
     keywords = ""
