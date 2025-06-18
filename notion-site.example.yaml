@@ -1,0 +1,10 @@
+notion:
+    databaseId: DATABASE_ID
+    filterProp: Status
+    filterValue:
+        - Finished
+        - Published
+    publishedValue: Published
+markdown:
+    homePath: "."
+    imagePublicLink: ""

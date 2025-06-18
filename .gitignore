@@ -1,0 +1,12 @@
+!.gitkeep
+*.test
+imports.*
+dist/
+public/
+.DS_Store 
+content/post/*
+content/blogs.json
+hugo.toml
+.env
+*/_gen/*
+notion-site.yaml

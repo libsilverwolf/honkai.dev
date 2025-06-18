@@ -1,0 +1,36 @@
+# https://taskfile.dev
+
+version: '3'
+
+dotenv: ['.env', '{{.ENV}}/.env', '{{.HOME}}/.env']
+
+
+tasks:
+  clean:
+    cmds:
+      - rm -rf content/post/* content/blogs.json public
+  notion:sync: 
+    cmds:
+      - sed "s|DATABASE_ID|${NOTION_DATABASE_ID}|g" notion-site.example.yaml | tee notion-site.yaml
+      - notion-site
+  hugo:build:
+    cmds:
+      - env | grep GISCUS
+      - cp hugo.example.toml hugo.toml
+      - sed -i "s|GISCUS_REPO_ID|${GISCUS_REPO_ID}|g" hugo.toml
+      - sed -i "s|GISCUS_REPO|${GISCUS_REPO}|g" hugo.toml
+      - sed -i "s|GISCUS_CATEGORY_ID|${GISCUS_CATEGORY_ID}|g" hugo.toml
+      - sed -i "s|GISCUS_CATEGORY|${GISCUS_CATEGORY}|g" hugo.toml
+      - hugo --gc --minify --baseURL ${HUGO_BASE_URL:-/}
+  hugo:server:
+    cmds:
+      - hugo server --bind=0.0.0.0
+  deploy:cf-pages:
+    cmds:
+      - npx wrangler pages deploy --project-name $CLOUDFLARE_PAGES_PROJECT_NAME public
+  default:
+    cmds:
+      - task: clean
+      - task: notion:sync
+      - task: hugo:build
+      - task: deploy:cf-pages
